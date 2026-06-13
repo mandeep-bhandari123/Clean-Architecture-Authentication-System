@@ -6,7 +6,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from ..infrastructure.database import get_db
 from fastapi import Depends
 
-async def get_redister_use_case(session :AsyncSession = Depends(get_db)):
+async def get_register_use_case(session :AsyncSession = Depends(get_db)):
     repo = SQLAlchemyUserRepository(session=session)
     hasher = BcryptPasswordHasher()
     return RegisterUser(repo=repo , hasher=hasher)

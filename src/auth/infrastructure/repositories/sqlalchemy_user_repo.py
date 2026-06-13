@@ -28,10 +28,9 @@ class SQLAlchemyUserRepository(UserRepository):
         db_user = result.scalar_one_or_none()
         if not db_user:
             return None
-        return UserOut(
+        return UserInDB(
             id=db_user.id,
             email=db_user.email,
             password_hash=db_user.password_hash,
         )
-
 

@@ -1,4 +1,4 @@
-from src.auth.domain.exceptions import UserALreadyExistsError
+from src.auth.domain.exceptions import UserAlreadyExistsError
 from ..ports.password_hasher import AbstractPasswordHasher
 from src.auth.domain.repository import UserRepository
 from src.auth.domain.entities import User
@@ -9,8 +9,8 @@ class RegisterUser:
         self.hasher = hasher
 
     async def execute (self, email:str , password:str):
-        if (await self.repo.get_user_by_email(self.email)):
-            raise UserALreadyExistsError()
+        if (await self.repo.get_user_by_email(email)):
+            raise UserAlreadyExistsError()
         else:
             hashed_password = self.hasher.hash(plain_password=password)
             user = User(email=email , password_hash=hashed_password)

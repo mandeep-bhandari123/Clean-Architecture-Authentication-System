@@ -17,3 +17,8 @@ class UserOut(BaseModel):
 class DeleteResuest(BaseModel):
     email:EmailStr
     password:str
+
+class UpdateRequest(BaseModel):
+    old_email:EmailStr
+    new_email:EmailStr
+    password:str

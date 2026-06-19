@@ -1,9 +1,10 @@
 from fastapi import APIRouter, Depends , status
-from .auth_schemas import RegisterRequest, LoginRequest, UserOut , DeleteResuest
-from .dependencies import get_register_use_case, get_login_use_case , get_delete_use_case
+from .auth_schemas import RegisterRequest, LoginRequest, UserOut , DeleteResuest , UpdateRequest
+from .dependencies import get_register_use_case, get_login_use_case , get_delete_use_case , get_update_use_case
 from ..application.use_cases.register_user import RegisterUser
 from ..application.use_cases.login_user import LoginUser
 from ..application.use_cases.delete_user import DeleteUser
+from ..application.use_cases.update_user import UpdateUser
 
 
 router = APIRouter(tags=["auth"], prefix="/auth")
@@ -30,3 +31,11 @@ async def delete_user(
     use_case : DeleteUser = Depends(get_delete_use_case)
 ):
     await use_case.execute(email)
+
+@router.put("/update", status_code=status.HTTP_200_OK)
+async def update_user(
+    request:UpdateRequest,
+    use_case :UpdateUser = Depends(get_update_use_case)
+):
+    
+    await use_case.execute(request.old_email)

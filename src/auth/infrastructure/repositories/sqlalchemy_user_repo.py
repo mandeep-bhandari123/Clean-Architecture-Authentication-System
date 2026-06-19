@@ -1,5 +1,5 @@
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy import select , delete
+from sqlalchemy import select , delete , update
 from ...domain.entities import User , UserInDB, UserOut
 from ...domain.repository import UserRepository
 from ...infrastructure.orm.models import UserModel
@@ -44,3 +44,17 @@ class SQLAlchemyUserRepository(UserRepository):
         await self.session.commit()
 
         return {"Message":"User already deleted"}
+
+    async def update_user(self, user:User)->UserInDB |None:
+        db_user = await self.session.execute(
+            update(UserModel).where(UserModel.email == user.email).values(email=user.email, password_hash=user.password_hash)
+        )
+        await self.session.commit()
+        await self.session.refresh(db_user)
+
+        return UserInDB(
+            id=db_user.id,
+            email=db_user.email,
+            password_hash=db_user.password_hash,
+        )
+

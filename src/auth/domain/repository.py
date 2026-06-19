@@ -16,10 +16,10 @@ class UserRepository(ABC):
         """Gets User by email"""
         ...
 
-    # @abstractmethod
-    # async def update_user(self , user_id:UUID, user_update:dict)->UserOut | None:
-    #     """Updates User"""
-    #     ...
+    @abstractmethod
+    async def update_user(self , user_id:UUID, user_update:dict)->UserOut | None:
+        """Updates User"""
+        ...
 
 
     @abstractmethod
